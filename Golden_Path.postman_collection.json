@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "647bb5de-da07-4e32-ae21-bbc9203b129e",
+		"_postman_id": "000853e8-4ae9-45d6-bc35-a5a01bd08fed",
 		"name": "Golden_Path",
 		"description": "Purpose: To setup a newly deployed Mojaloop Switch and add test FSPs along with their callback and other Information needed for end-to-end testing.\n\nContributors:\n- Mowali\n- Amar Ramachandran <amarnath.ramachandran@modusbox.com>\n- Georgi Georgiev <georgi.georgiev@modusbox.com>\n- Juan Correa <juan.correa@modusbox.com>\n- Miguel deBarros <miguel.debarros@modusbox.com>\n- Nico Duvenage <nico.duvenage@modusbox.com>\n- Sam Kummary <sam@modusbox.com>\n- Sri Miryala <sridevi.miriyala@modusbox.com>\n- Steven Oderayi <steven.oderayi@modusbox.com>\n- valentin genev <valentin.genev@modusbox.com>\n- Vijay Guthi <vijaya.guthi@modusbox.com>",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -11620,11 +11620,11 @@
 									"          console.log('response: ',response.json());",
 									"       ",
 									"       var jsonData = response.json();",
-									"        pm.test(\"Error Code should be returned '3100'\", function () {",
-									"            pm.expect(jsonData.errorInformation.errorCode).to.eql('3100');",
+									"        pm.test(\"Error Code should be returned '3202'\", function () {",
+									"            pm.expect(jsonData.errorInformation.errorCode).to.eql('3202');",
 									"        });",
 									"        pm.test(\"Error Description should be returned\", function () {",
-									"            pm.expect(jsonData.errorInformation.errorDescription).to.eql('Generic validation error - Unsupported participant \\'payerfsp\\'');",
+									"            pm.expect(jsonData.errorInformation.errorDescription).to.include('Payer FSP ID not found');",
 									"        });",
 									"        ",
 									"      } else {",
@@ -13675,12 +13675,12 @@
 								"exec": [
 									"const jsonData = pm.response.json();",
 									"",
-									"pm.test(\"Check Internal server error\", function () {",
-									"    pm.expect(jsonData.errorInformation.errorDescription).to.include('Internal server error');",
+									"pm.test(\"Check Malformed syntax error\", function () {",
+									"    pm.expect(jsonData.errorInformation.errorDescription).to.include('Malformed syntax');",
 									"});",
 									"",
-									"pm.test(\"Check Error code 2001\", function () {",
-									"    pm.expect(jsonData.errorInformation.errorCode).to.eql('2001');",
+									"pm.test(\"Check Error code 3101\", function () {",
+									"    pm.expect(jsonData.errorInformation.errorCode).to.eql('3101');",
 									"});"
 								],
 								"type": "text/javascript"
@@ -14286,7 +14286,9 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

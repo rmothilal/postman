@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "000853e8-4ae9-45d6-bc35-a5a01bd08fed",
+		"_postman_id": "71b9e40f-811f-49f5-a1e3-39f70460370d",
 		"name": "Golden_Path",
 		"description": "Purpose: To setup a newly deployed Mojaloop Switch and add test FSPs along with their callback and other Information needed for end-to-end testing.\n\nContributors:\n- Mowali\n- Amar Ramachandran <amarnath.ramachandran@modusbox.com>\n- Georgi Georgiev <georgi.georgiev@modusbox.com>\n- Juan Correa <juan.correa@modusbox.com>\n- Miguel deBarros <miguel.debarros@modusbox.com>\n- Nico Duvenage <nico.duvenage@modusbox.com>\n- Sam Kummary <sam@modusbox.com>\n- Sri Miryala <sridevi.miriyala@modusbox.com>\n- Steven Oderayi <steven.oderayi@modusbox.com>\n- valentin genev <valentin.genev@modusbox.com>\n- Vijay Guthi <vijaya.guthi@modusbox.com>",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -1933,8 +1933,10 @@
 									"setTimeout(function () {",
 									"  pm.sendRequest(pm.environment.get(\"HOST_SIMULATOR\")+\"/payerfsp/callbacks/\"+pm.environment.get(\"transfer_ID\"), function (err, response) {",
 									"          if(response.responseSize !== 0) {",
-									"              var jsonData = response.json().data;",
-									"              var headers = response.json().headers;",
+									"              const jsonData = response.json().data;",
+									"              const headers = response.json().headers;",
+									"              const transferId = pm.environment.get(\"transfer_ID\");",
+									"              ",
 									"              pm.test(\"Error Code should be returned\", function () {",
 									"                pm.expect(jsonData.errorInformation.errorCode).to.eql('4001');",
 									"              });",
@@ -1961,12 +1963,12 @@
 									"                pm.expect(headers['content-type']).to.eql('application/vnd.interoperability.transfers+json;version=1.0');",
 									"            });",
 									"            ",
-									"            pm.test(\"fspiop-uri is empty\", function () {",
-									"                pm.expect(headers['fspiop-uri']).to.eql(undefined);",
+									"            pm.test(`fspiop-uri is /payerfsp/transfers/${transferId}/error`, function () {",
+									"                pm.expect(headers['fspiop-uri']).to.eql(`/payerfsp/transfers/${transferId}/error`);",
 									"            });",
 									"            ",
-									"            pm.test(\"fspiop-http-method is empty\", function () {",
-									"                pm.expect(headers['fspiop-http-method']).to.eql(undefined);",
+									"            pm.test(\"fspiop-http-method is PUT\", function () {",
+									"                pm.expect(headers['fspiop-http-method']).to.eql(\"PUT\");",
 									"            });",
 									"          } else {",
 									"              pm.test(\"Transfer FAILED\", function () {",
@@ -14286,9 +14288,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
